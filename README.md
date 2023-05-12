@@ -1,2 +1,1 @@
-# ShipStation-to-ClickUp
-Pulling info from ShipStation API to ClickUp API
+Once tagged in shipstation then the info is transferred to Click-Up
