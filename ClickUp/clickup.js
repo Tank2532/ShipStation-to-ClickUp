@@ -13,14 +13,7 @@ const address = 'f4b44bd7-8e2f-4586-a4bf-7e0009e7f515';
 // const require = createRequire(import.meta.url);
 
 // imports from node.js file
-import dataPull from '../../ClickUp-and-ShipStation/ShipStation1/node.js';
-
-const nameOfCustomer = dataPull.nameOfCustomer;
-const emailOfCustomer = dataPull.emailOfCustomer;
-const dateOrdered = dataPull.dateOrdered;
-const phoneNumber = dataPull.phoneNumber;
-const addressOfCustomer = dataPull.addressOfCustomer;
-
+const freightShipment = require('../ShipStation/index');
 
 // // Readline package to read one line at a time in order to use the information in the first file
 // const EventEmitter = require('events');
@@ -169,8 +162,15 @@ import fetch from 'node-fetch';
 //         }
 // });
 
-const createTask = async () => {
+const createTask = async (data) => {
     try {
+
+        const nameOfCustomer = data.nameOfCustomer;
+        const emailOfCustomer = data.emailOfCustomer;
+        const dateOrdered = data.dateOrdered;
+        const phoneNumber = data.phoneNumber;
+        const addressOfCustomer = data.addressOfCustomer;
+
         const query = new URLSearchParams({
         custom_task_ids: 'true',
         team_id: '123'
@@ -247,7 +247,19 @@ const createTask = async () => {
     }
 }
 
-createTask();
+
+const init = async () => {
+    try {
+        const data = await freightShipment();
+
+        const taskData = await createTask(data);
+
+    } catch(err) {
+        console.log(err);
+    };
+};
+
+init();
 
 // module.exports = { createTask };
 

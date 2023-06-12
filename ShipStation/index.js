@@ -28,13 +28,15 @@ const freightShipment = async () => {
 
     const customerId = orderData.orders[0].customerId;
 
-    console.log(customerId);
+    // console.log(customerId);
 
     const { data: customerData } = await axios.get(`https://ssapi.shipstation.com/customers/${customerId}`, {
       headers: shipstationHeaders
     });
 
-    console.log(customerData);
+    // console.log(customerData);
+
+    return customerData;
 
   } catch (err) {
     console.log(err);
@@ -42,4 +44,4 @@ const freightShipment = async () => {
 
 };
 
-freightShipment();
+module.exports = freightShipment;
