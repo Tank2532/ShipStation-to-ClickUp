@@ -9,8 +9,8 @@ const shipping = 'a7d1e687-34d5-41fe-b29e-9b1830b25d0f';
 const address = 'f4b44bd7-8e2f-4586-a4bf-7e0009e7f515';
 
 
-// import { createRequire } from "module";
-// const require = createRequire(import.meta.url);
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 
 // imports from node.js file
 const freightShipment = require('../ShipStation/index');
@@ -162,14 +162,20 @@ import fetch from 'node-fetch';
 //         }
 // });
 
-const createTask = async (data) => {
+const createTask = async (freight) => {
     try {
 
-        const nameOfCustomer = data.nameOfCustomer;
-        const emailOfCustomer = data.emailOfCustomer;
-        const dateOrdered = data.dateOrdered;
-        const phoneNumber = data.phoneNumber;
-        const addressOfCustomer = data.addressOfCustomer;
+        const nameOfCustomer = freight.nameOfCustomer;
+        const emailOfCustomer = freight.emailOfCustomer;
+        const dateOrdered = freight.dateOrdered;
+        const phoneNumber = freight.phoneNumber;
+        const addressOfCustomer = freight.addressOfCustomer;
+
+        console.log(nameOfCustomer);
+        console.log(emailOfCustomer);
+        console.log(dateOrdered);
+        console.log(phoneNumber);
+        console.log(addressOfCustomer);
 
         const query = new URLSearchParams({
         custom_task_ids: 'true',
@@ -250,9 +256,10 @@ const createTask = async (data) => {
 
 const init = async () => {
     try {
-        const data = await freightShipment();
+        const freight = await freightShipment();
 
-        const taskData = await createTask(data);
+        // const taskData = await createTask(data);
+        await createTask(freight);
 
     } catch(err) {
         console.log(err);
@@ -260,7 +267,3 @@ const init = async () => {
 };
 
 init();
-
-// module.exports = { createTask };
-
-// export default createTask;
