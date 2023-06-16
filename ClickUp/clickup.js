@@ -165,15 +165,18 @@ import fetch from 'node-fetch';
 const createTask = async (freight) => {
     try {
 
-        const nameOfCustomer = freight.nameOfCustomer;
-        const emailOfCustomer = freight.emailOfCustomer;
-        const dateOrdered = freight.dateOrdered;
-        const phoneNumber = freight.phoneNumber;
-        const addressOfCustomer = freight.addressOfCustomer;
+        console.log(freight);
+
+        // The following variables are undefined
+        const nameOfCustomer = freight.name;
+        const emailOfCustomer = freight.email;
+        // const dateOrdered = freight.createDate;
+        const phoneNumber = freight.phone;
+        const addressOfCustomer = freight.street1 + "\n" + freight.street2 + "\n" + freight.city + ", " + freight.state + freight.postalCode + ", " + freight.countryCode;
 
         console.log(nameOfCustomer);
         console.log(emailOfCustomer);
-        console.log(dateOrdered);
+        // console.log(dateOrdered);
         console.log(phoneNumber);
         console.log(addressOfCustomer);
 
@@ -222,7 +225,7 @@ const createTask = async (freight) => {
                 },
                 {
                     id: orderDate,
-                    value: dateOrdered,
+                    value: "",
                 },
                 {
                     id: sku,
@@ -230,7 +233,7 @@ const createTask = async (freight) => {
                 },
                 {
                     id: phone,
-                    value: phoneNumber,
+                    value: "",
                 },
                 {
                     id: shipping,
@@ -258,7 +261,8 @@ const init = async () => {
     try {
         const freight = await freightShipment();
 
-        // const taskData = await createTask(data);
+
+        // const taskData = await createTask(freight);
         await createTask(freight);
 
     } catch(err) {
