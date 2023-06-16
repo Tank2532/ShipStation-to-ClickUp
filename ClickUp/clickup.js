@@ -3,9 +3,9 @@ const customerName = 'eb50ea3f-72cf-4e50-9143-7a695ee633fc';
 const shipstationUrl = '00b4dd48-244b-466e-b458-2a50909322a7';
 const email = '1dede1e3-ec46-4e60-97ee-9cc38c10db5e';
 const orderDate = '7607e948-8481-4827-a28b-037ae0e124de';
-const sku = '80b5d9fd-6db8-40ea-9c30-12a5d0126942';
+const skuField = '80b5d9fd-6db8-40ea-9c30-12a5d0126942';
 const phone = 'a444486f-2fac-40c1-b65b-3a7ea65da5eb';
-const shipping = 'a7d1e687-34d5-41fe-b29e-9b1830b25d0f';
+const shippingField = 'a7d1e687-34d5-41fe-b29e-9b1830b25d0f';
 const address = 'f4b44bd7-8e2f-4586-a4bf-7e0009e7f515';
 
 
@@ -14,10 +14,6 @@ const require = createRequire(import.meta.url);
 
 // imports from node.js file
 const freightShipment = require('../ShipStation/index');
-
-// // Readline package to read one line at a time in order to use the information in the first file
-// const EventEmitter = require('events');
-// const userInputEvent = new EventEmitter();
 
 // // The below function pulls the TeamId
 // import fetch from 'node-fetch';
@@ -138,47 +134,25 @@ const freightShipment = require('../ShipStation/index');
 
 import fetch from 'node-fetch';
 
-// // The question that starts the task creating code and uses the variables found in Node.js
-// userInputEvent.on('userInput1', () => {
-//     rl.question('Do you want to create a task? ', (input2) => {
-//         userInputEvent.emit('userInput2', input2);
-                
-//         rl.close();
-//     });
-
-// });
-
-// userInputEvent.on('userInput2', (input2) => {
-//     console.log('Received input 2:', input2);
-//         try {
-//             if (input2 === 'Yes') {
-//                 createTask();
-//             }
-//             else {
-//                 return 'Please try again.'
-//             }
-//         } catch (err) {
-//             console.log(err);
-//         }
-// });
-
 const createTask = async (freight) => {
     try {
 
-        console.log(freight);
+        // console.log(freight);
 
-        // The following variables are undefined
-        const nameOfCustomer = freight.name;
-        const emailOfCustomer = freight.email;
-        // const dateOrdered = freight.createDate;
-        const phoneNumber = freight.phone;
-        const addressOfCustomer = freight.street1 + "\n" + freight.street2 + "\n" + freight.city + ", " + freight.state + freight.postalCode + ", " + freight.countryCode;
-
-        console.log(nameOfCustomer);
-        console.log(emailOfCustomer);
-        // console.log(dateOrdered);
-        console.log(phoneNumber);
-        console.log(addressOfCustomer);
+        const nameOfCustomer = freight[0].name;
+        // Email has not been tested yet
+        const emailOfCustomer = freight[0].email;
+        // Date needs adjusted format
+        const dateOrdered = freight[0].createDate;
+        // Phone needs adjusted format
+        const phoneNumber = freight[0].phone;
+        const addressOfCustomer = freight[0].street1 + "\n" + freight[0].street2 + "\n" + freight[0].city + ", " + freight[0].state + freight[0].postalCode + ", " + freight[0].countryCode;
+        const items = freight[1].orders[0].items;
+        const sku = freight[1].orders[0].items[0].sku;
+        const itemName = freight[1].orders[0].items[0].name;
+        const quantity = freight[1].orders[0].items[0].quantity;
+        const value = freight[1].orders[0].items[0].unitPrice;
+        const shipping = freight[1].orders[0].shippingAmount;
 
         const query = new URLSearchParams({
         custom_task_ids: 'true',
@@ -195,10 +169,10 @@ const createTask = async (freight) => {
             Authorization: 'pk_57132549_SW46N1UIKJ1Q4WE59XXNT7LOK2PUX6RV'
             },
             body: JSON.stringify({
-                name: 'Test This Task',
-                description: 'New Task Description',
+                name: itemName,
+                description: `${value}`,
                 assignees: [183],
-                tags: ['tag name 1'],
+                tags: [''],
                 status: 'New',
                 priority: 3,
                 due_date: 1508369194377,
@@ -228,16 +202,16 @@ const createTask = async (freight) => {
                     value: "",
                 },
                 {
-                    id: sku,
-                    value: 'CG00SOM',
+                    id: skuField,
+                    value: sku,
                 },
                 {
                     id: phone,
                     value: "",
                 },
                 {
-                    id: shipping,
-                    value: '400',
+                    id: shippingField,
+                    value: shipping,
                 },
                 {
                     id: address,

@@ -26,7 +26,14 @@ const freightShipment = async () => {
       headers: shipstationHeaders
     });
 
+    // console.log(orderData);
+
     const customerId = orderData.orders[0].customerId;
+    // const items = orderData.orders[0].items;
+    // const sku = orderData.orders[0].items[0].sku;
+    // const itemName = orderData.orders[0].items[0].name;
+    // const quantity = orderData.orders[0].items[0].quantity;
+    // const value = orderData.orders[0].items[0].unitPrice;
 
     // console.log(customerId);
 
@@ -36,12 +43,14 @@ const freightShipment = async () => {
 
     // console.log(customerData);
 
-    return customerData;
+    return [customerData, orderData];
 
   } catch (err) {
     console.log(err);
   }
 
 };
+
+// freightShipment();
 
 module.exports = freightShipment;
